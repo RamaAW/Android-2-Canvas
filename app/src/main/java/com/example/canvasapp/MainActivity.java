@@ -8,8 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -34,26 +32,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mImageView = findViewById(R.id.myimageview);
 
-        mColorBg    = ResourcesCompat.getColor(getResources(), R.color.colorBackground, null);
-        mColorRect  = ResourcesCompat.getColor(getResources(), R.color.colorRectangle, null);
+        mColorBg = ResourcesCompat.getColor(getResources(), R.color.colorBackground, null);
+        mColorRect = ResourcesCompat.getColor(getResources(), R.color.colorRectangle, null);
 
         mPaint.setColor(mColorBg);
         mPaintText.setColor(ResourcesCompat.getColor(getResources(), R.color.black, null));
         mPaintText.setTextSize(70);
         mRec = new Rect();
 
-        mImageView.setOnClickListener(new View.OnClickListener(){
+        mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int vWidth      = view.getWidth();
-                int vHeight     = view.getHeight();
-                int halfWidth   = vWidth/2;
-                int halfHeight  = vHeight/2;
+                int vWidth = view.getWidth();
+                int vHeight = view.getHeight();
+                int halfWidth = vWidth / 2;
+                int halfHeight = vHeight / 2;
 
-
-                if (mOffset==OFFSET) {
+                if(mOffset == OFFSET){
                     mBitmap = Bitmap.createBitmap(vWidth, vHeight, Bitmap.Config.ARGB_8888);
                     mImageView.setImageBitmap(mBitmap);
 
@@ -61,23 +59,20 @@ public class MainActivity extends AppCompatActivity {
                     mCanvas.drawColor(mColorBg);
                     mCanvas.drawText("Keep Tapping", 100, 100, mPaintText);
                     mOffset += OFFSET;
-                }
-                else{
-                    if (mOffset < halfWidth && mOffset < halfHeight) {
+                }else{
+                    if(mOffset < halfHeight && mOffset < halfWidth){
                         mPaint.setColor(mColorRect - MULTIPLIER*mOffset);
 
                         mRec.set(mOffset, mOffset, vWidth - mOffset, vHeight - mOffset);
                         mCanvas.drawRect(mRec, mPaint);
                         mOffset += OFFSET;
-
-                    }
-                    else{
-                        int mColorAccent = ResourcesCompat.getColor(getResources(), R.color.teal_700, null);
+                    }else{
+                        int mColorAccent = ResourcesCompat.getColor(getResources(), R.color.teal_200, null);
                         mPaint.setColor(mColorAccent);
-                        mCanvas.drawCircle(halfWidth, halfHeight,halfWidth/3, mPaint);
+                        mCanvas.drawCircle(halfWidth, halfHeight, halfWidth/3, mPaint);
 
-                        String text     = "Done";
-                        Rect mBounds    = new Rect();
+                        String text = "Done";
+                        Rect mBounds = new Rect();
                         mPaintText.getTextBounds(text, 0, text.length(), mBounds);
                         int x = halfWidth - mBounds.centerX();
                         int y = halfHeight - mBounds.centerY();
